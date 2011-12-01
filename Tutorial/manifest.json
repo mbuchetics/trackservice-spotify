@@ -1,0 +1,25 @@
+{
+	"BundleType": "Application",
+	"AppIcon": {
+		"36x18": "tutorial.png"
+	},
+	"AppName": {
+		"en": "blub2"
+	},
+	"SupportedLanguages": [
+		"en"
+	],
+	"RequiredPermissions": [
+		"https://www.googleapis.com"
+	],
+	"DefaultTabs": [
+		{
+			"arguments": "test",
+			"title":  { "en": "test" }
+		},
+		{
+			"arguments": "test2",
+			"title": { "en": "test2" }
+		}
+	]
+}
