@@ -10,7 +10,7 @@
 		"en"
 	],
 	"RequiredPermissions": [
-		"https://www.googleapis.com"
+		"http://trackservice.herokuapp.com"
 	],
 	"DefaultTabs": [
 		{
@@ -18,8 +18,8 @@
 			"title":  { "en": "test" }
 		},
 		{
-			"arguments": "test2",
-			"title": { "en": "test2" }
+			"arguments": "test3",
+			"title": { "en": "test3" }
 		}
 	]
 }

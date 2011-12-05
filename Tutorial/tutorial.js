@@ -1,9 +1,7 @@
-sp = getSpotifyApi(1);
+var sp = getSpotifyApi(1);
 
 window.Models = sp.require("sp://import/scripts/api/models");
 window.Views = sp.require("sp://import/scripts/api/views");
-
-exports.init = init;
 
 function init() {
 
@@ -22,36 +20,60 @@ function init() {
 	});
 }
 
-function updatePageWithTrackDetails() {
+function updateSongs() {
+	console.log("updating ...");
 	
-	var header = document.getElementById("header");
-
-	// This will be null if nothing is playing.
-	var playerTrackInfo = sp.trackPlayer.getNowPlayingTrack();
-
-	if (playerTrackInfo == null) {
-		header.innerText = "Nothing playing!";
-	} else {
-		var track = playerTrackInfo.track;
-		header.innerText = track.name + " on the album " + track.album.name + " by " + track.album.artist.name + ".";
-	}
+	window.CurrentPlaylist = new Models.Playlist();
+	
+	$.getJSON('http://trackservice.herokuapp.com/api/plays?count=10', function(data) {	
+		for(i = 0; i < data.length; i++) {
+			var song = data[i];				
+			
+			console.log(song);
+			
+			if (song.spotify) {
+				var track = Models.Track.fromURI(song.spotify);
+				
+				if (track) {				
+					console.log(track.toString());
+					
+					CurrentPlaylist.add(track);
+					
+					if (track.data && track.data.album) {
+						var cover = track.data.album.cover;
+					
+						if (cover)
+							$('#covers').append("<div class=song><div class=title>" + song.artist + " - " + song.title + "</div><div class=cover><img src=" + cover + "></img></div></div>");
+					}
+				}
+			}
+			else {
+				console.log("TEST");
+				var track = Models.Track.fromURI("spotify:local:" + song.artist + ":UnknownAlbum:" + song.title + ":000");
+				console.log(track);
+				CurrentPlaylist.add(track);
+			}
+		}
+		
+		var FIELD       = Views.Track.FIELD,
+			TRACK_FLAGS = FIELD.STAR | FIELD.NAME | FIELD.ARTIST;
+		
+		var viewlist = new Views.List(CurrentPlaylist, function(track) {
+			return new Views.Track(track);
+		});
+		
+		console.log(viewlist);
+		$('#playlist').html(viewlist.node);
+	});
 }
 
-function searchGoogleForSpotify() {
-
-	var req = new XMLHttpRequest();
-	req.open("GET", "https://www.googleapis.com/customsearch/v1?q=spotify", true);
-
-	req.onreadystatechange = function() {
-
-		console.log(req.status);
-
-   		if (req.readyState == 4) {
-    		if (req.status == 200) {
-       			console.log("Search complete");
-     		}
-   		}
-  	};
-
-	req.send();
-}
+$(document).ready(function() {
+	updateSongs();
+	
+	$('.add-playlist').click(function() {
+		console.log("clicked");
+		
+		sp.core.library.createPlaylist("FM4 Songs", CurrentPlaylist.data.all());
+		
+	});
+});
