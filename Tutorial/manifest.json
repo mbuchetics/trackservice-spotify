@@ -1,25 +1,25 @@
 {
-	"BundleType": "Application",
-	"AppIcon": {
-		"36x18": "tutorial.png"
-	},
-	"AppName": {
-		"en": "blub2"
-	},
-	"SupportedLanguages": [
-		"en"
-	],
-	"RequiredPermissions": [
-		"http://trackservice.herokuapp.com"
-	],
-	"DefaultTabs": [
-		{
-			"arguments": "test",
-			"title":  { "en": "test" }
-		},
-		{
-			"arguments": "test3",
-			"title": { "en": "test3" }
-		}
-	]
+    "BundleType": "Application",
+    "AppIcon": {
+        "36x18": "tutorial.png"
+    },
+    "AppName": {
+        "en": "blub2"
+    },
+    "SupportedLanguages": [
+        "en"
+    ],
+    "RequiredPermissions": [
+        "http://trackservice.herokuapp.com"
+    ],
+    "DefaultTabs": [
+        {
+            "arguments": "test",
+            "title":  { "en": "test" }
+        },
+        {
+            "arguments": "test3",
+            "title": { "en": "test3" }
+        }
+    ]
 }
