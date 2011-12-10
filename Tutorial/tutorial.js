@@ -32,10 +32,12 @@ function updateSongs() {
             console.log(song);
             
             if (song.spotify) {
+                console.log('getting track');
                 var track = Models.Track.fromURI(song.spotify);
                 
-                if (track) {                
-                    console.log(track.toString());
+                if (track) {
+                    console.log('track found');                     
+                    //console.log(track.toString());
                     
                     CurrentPlaylist.add(track);
                     
